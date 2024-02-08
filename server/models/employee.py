@@ -35,6 +35,19 @@ class EmployeeModel(BaseModel):
                 "Only email addresses from 'Gmail' or 'Yahoo' domains are allowed")
         return v
 
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "name": "Bob",
+                "gender": "Male",
+                "email": "bob@gmail.com",
+                "department_id": "65c490b995bed3ce95876fc2",
+                "salary": "12000",
+                "tenure": 3,
+                "hiring_trend": "growing",
+            }
+        }
+
 
 class EmployeeResponseModel(BaseModel):
     id: str
@@ -46,3 +59,21 @@ class EmployeeResponseModel(BaseModel):
     salary: float = Field(gt=1000.0)
     tenure: int = Field(gt=0.0)
     hiring_trend: HiringTrend
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "id": "65c490b995bed3ce95876fc2",
+                "name": "Bob",
+                "gender": "Male",
+                "email": "bob@gmail.com",
+                "department_id": "65c490b995bed3ce95876fc2",
+                "department": {
+                    "id": "65c490b995bed3ce95876fc2",
+                    "department_name": "Accounts"
+                },
+                "salary": "12000",
+                "tenure": 3,
+                "hiring_trend": "growing",
+            }
+        }
