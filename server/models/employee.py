@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, EmailStr, Field, validator
+from server.helpers import check_objectId
 
 from server.models.department import DepartmentResponseModel
 
@@ -25,6 +26,13 @@ class EmployeeModel(BaseModel):
     salary: float = Field(gt=1000.0)
     tenure: int = Field(gt=0.0)
     hiring_trend: HiringTrend
+
+    @validator("department_id")
+    def validate_department_id(cls, v):
+        output = check_objectId(v)
+        if output is False:
+            raise ValueError("Department_id should be a valid ID.")
+        return v
 
     @validator("email")
     def validate_email_domain(cls, v):
