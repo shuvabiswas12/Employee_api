@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, status
 from server.models.employee import EmployeeModel, EmployeeResponseModel
 
@@ -6,7 +7,7 @@ from server.services.employee_service import create_employee, delete_employee, e
 employee_router = APIRouter(prefix="/employees", tags=["Employee"])
 
 
-@employee_router.get("", status_code=status.HTTP_200_OK)
+@employee_router.get("", status_code=status.HTTP_200_OK, response_model=List[EmployeeResponseModel])
 async def get():
     return await get_employees()
 

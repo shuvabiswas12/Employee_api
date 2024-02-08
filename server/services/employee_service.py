@@ -1,3 +1,4 @@
+from typing import List
 from bson import ObjectId
 from fastapi import HTTPException
 
@@ -20,8 +21,8 @@ def employee_helper(employee, department):
         hiring_trend=employee["hiring_trend"])
 
 
-async def get_employees() -> list:
-    employees: list = []
+async def get_employees() -> List[EmployeeResponseModel]:
+    employees: list[EmployeeResponseModel] = []
     for employee in employees_collection.find():
         department_id = employee["department_id"]
         department = departments_collection.find_one(
@@ -30,7 +31,7 @@ async def get_employees() -> list:
     return employees
 
 
-async def get_employee(id: str):
+async def get_employee(id: str) -> EmployeeResponseModel:
     if not check_objectId(id):
         raise HTTPException(status_code=500, detail="Invalid Id!")
 
@@ -62,7 +63,7 @@ async def edit_employee(id: str, employee: EmployeeModel) -> bool:
     return True
 
 
-async def create_employee(employee: EmployeeModel):
+async def create_employee(employee: EmployeeModel) -> EmployeeResponseModel:
     result = employees_collection.insert_one(dict(employee))
     return EmployeeResponseModel(
         id=str(result.inserted_id),

@@ -1,3 +1,4 @@
+from typing import List
 from bson import ObjectId
 from fastapi import HTTPException
 
@@ -10,14 +11,14 @@ def department_helper(department):
     return DepartmentResponseModel(id=str(department["_id"]), department_name=department["department_name"])
 
 
-async def get_departments() -> list:
-    departments: list[DepartmentResponseModel] = []
+async def get_departments() -> List[DepartmentResponseModel]:
+    departments: List[DepartmentResponseModel] = []
     for department in departments_collection.find():
         departments.append(department_helper(department))
     return departments
 
 
-async def get_department(id: str):
+async def get_department(id: str) -> DepartmentResponseModel:
     if not check_objectId(id):
         raise HTTPException(status_code=500, detail="Invalid Id!")
 
@@ -27,7 +28,7 @@ async def get_department(id: str):
     return department_helper(result)
 
 
-async def create_department(department: DepartmentModel):
+async def create_department(department: DepartmentModel) -> DepartmentResponseModel:
     result = departments_collection.insert_one(dict(department))
     return DepartmentResponseModel(id=str(result.inserted_id), department_name=department.department_name)
 
