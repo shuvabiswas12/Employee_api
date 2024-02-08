@@ -21,7 +21,7 @@ def employee_helper(employee, department):
 
 
 async def get_employees() -> list:
-    employees: list(EmployeeResponseModel) = []
+    employees: list = []
     for employee in employees_collection.find():
         department_id = employee["department_id"]
         department = departments_collection.find_one(
