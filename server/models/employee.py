@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Optional
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from server.helpers import check_objectId
 
 from server.models.department import DepartmentResponseModel
@@ -27,14 +27,14 @@ class EmployeeModel(BaseModel):
     tenure: int = Field(gt=0.0)
     hiring_trend: HiringTrend
 
-    @validator("department_id")
+    @field_validator("department_id")
     def validate_department_id(cls, v):
         output = check_objectId(v)
         if output is False:
             raise ValueError("Department_id should be a valid ID.")
         return v
 
-    @validator("email")
+    @field_validator("email")
     def validate_email_domain(cls, v):
         allowed_domains = ["gmail.com", "yahoo.com"]
         email_domain = v.split("@")[-1]
@@ -43,7 +43,7 @@ class EmployeeModel(BaseModel):
                 "Only email addresses from 'Gmail' or 'Yahoo' domains are allowed")
         return v
 
-    class Config:
+    class ConfigDict:
         json_schema_extra = {
             "example": {
                 "name": "Bob",
@@ -63,12 +63,12 @@ class EmployeeResponseModel(BaseModel):
     gender: Gender
     email: EmailStr
     department_id: Optional[str] = Field(default="")
-    department: Optional[DepartmentResponseModel] = Field(default={})
+    department: Optional[DepartmentResponseModel] = Field(default=None)
     salary: float = Field(gt=1000.0)
     tenure: int = Field(gt=0.0)
     hiring_trend: HiringTrend
 
-    class Config:
+    class ConfigDict:
         json_schema_extra = {
             "example": {
                 "id": "65c490b995bed3ce95876fc2",

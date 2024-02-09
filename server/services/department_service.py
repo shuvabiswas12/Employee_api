@@ -24,7 +24,7 @@ async def get_department(id: str) -> DepartmentResponseModel:
 
     result = departments_collection.find_one(ObjectId(id))
     if result is None:
-        raise HTTPException(status_code=404, detail="Not found!")
+        raise HTTPException(status_code=404, detail="Department is not found!")
     return department_helper(result)
 
 

@@ -23,7 +23,7 @@ async def create(department: DepartmentModel):
 
 
 @department_router.put("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def edit(id: str, department: DepartmentResponseModel):
+async def edit(id: str, department: DepartmentModel):
     return await edit_department(id, department)
 
 

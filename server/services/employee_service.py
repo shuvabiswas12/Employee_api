@@ -3,7 +3,7 @@ from bson import ObjectId
 from fastapi import HTTPException
 
 from server.helpers import check_objectId
-from server.services.department_service import department_helper
+from server.services.department_service import department_helper, get_department
 from ..database import employees_collection, departments_collection
 from server.models.employee import EmployeeModel, EmployeeResponseModel
 
@@ -15,7 +15,8 @@ def employee_helper(employee, department):
         gender=employee["gender"],
         email=employee["email"],
         department_id=employee["department_id"],
-        department=department_helper(department),
+        department=department_helper(
+            department) if department is not None else None,
         salary=employee["salary"],
         tenure=employee["tenure"],
         hiring_trend=employee["hiring_trend"])
@@ -45,7 +46,7 @@ async def delete_employee(id: str) -> bool:
     if not check_objectId(id):
         raise HTTPException(status_code=500, detail="Invalid Id!")
 
-    result: dict or None = employees_collection.find_one_and_delete(
+    result: dict | None = employees_collection.find_one_and_delete(
         {"_id": ObjectId(id)})
     if result is None:
         raise HTTPException(status_code=404, detail="Not found!")
@@ -64,6 +65,8 @@ async def edit_employee(id: str, employee: EmployeeModel) -> bool:
 
 
 async def create_employee(employee: EmployeeModel) -> EmployeeResponseModel:
+    await get_department(employee.department_id)
+
     result = employees_collection.insert_one(dict(employee))
     return EmployeeResponseModel(
         id=str(result.inserted_id),
