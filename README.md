@@ -49,9 +49,10 @@ Run the project
 ```
 
 Accessing the API from Browser
+Goto browser and type 
 
 ```bash
-  Goto browser and type "localhost:8000/docs" and hit enter.
-  You can see all endpoint.
+  "localhost:8000/docs"
 ```
+and hit enter. You can see all endpoint.
 
