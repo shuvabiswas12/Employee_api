@@ -2,3 +2,5 @@ fastapi==0.109.2
 uvicorn[standard]
 pymongo==4.6.1
 email-validator
+pytest==8.0.0
+httpx==0.26.0
