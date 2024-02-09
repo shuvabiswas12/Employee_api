@@ -52,7 +52,7 @@ Accessing the API from Browser
 Goto browser and type 
 
 ```bash
-  "localhost:8000/docs"
+  localhost:8000/docs
 ```
 and hit enter. You can see all endpoint.
 
