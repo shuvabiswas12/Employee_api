@@ -48,11 +48,21 @@ Run the project
   python main.py
 ```
 
-Accessing the API from Browser
+## Accessing the API from Browser
 Goto browser and type 
 
 ```bash
   localhost:8000/docs
 ```
 and hit enter. You can see all endpoint.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`DB_URL`
+
+For Example:
+DB_URL="Your mongoDb url"
+
 
