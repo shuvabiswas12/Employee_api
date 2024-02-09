@@ -65,4 +65,13 @@ To run this project, you will need to add the following environment variables to
 For Example:
 DB_URL="Your mongoDb url"
 
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  pytest -v -s
+```
+This command will run all test cases.
+
 
